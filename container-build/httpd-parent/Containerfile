@@ -8,7 +8,7 @@ RUN yum install -y --nodocs --disableplugin=subsciption-manager httpd &&\
     yum clean all --disable-plugin=subscription-manager -y &&\
 	echo "Hello from the httpd-parent container!" > ${DOCROOT}/index.html
 	
-ONBUILD COPY
+ONBUILD COPY src/ ${DOCROOT}/
 
 
 EXPOSE 80
