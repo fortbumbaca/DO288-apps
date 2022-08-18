@@ -1,0 +1,20 @@
+FROM registry.redhat.access.com/ubi8/ubi:8.0
+
+MANTAINER Red Hat Training <training@redhat.com>
+
+ENV DOCROOT=/var/www/html
+
+RUN yum install -y --nodocs --disableplugin=subsciption-manager httpd &&\
+    yum clean all --disable-plugin=subscription-manager -y &&\
+	echo "Hello from the httpd-parent container!" > ${DOCROOT}/index.html
+	
+ONBUILD COPY
+
+
+EXPOSE 80
+
+RUN rm -rf /run/httpd && mkdir /run/httpd
+
+USER root
+
+CMD /usr/sbin/httpd -DFOREGROUND
