@@ -18,8 +18,7 @@ echo "Trying $HOOK_RETRIES times, sleeping $HOOK_SLEEP sec between tries:"
 while [ "$HOOK_RETRIES" != 0 ]; do
 
 echo -n 'Checking if MySQL is up...'
-if mysqlshow -h$MYSQL_SERVICE_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD -P3306
-$MYSQL_DATABASE &>/dev/null
+if mysqlshow -h$MYSQL_SERVICE_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD -P3306 $MYSQL_DATABASE &>/dev/null
 then
 echo 'Database is up'
 break
@@ -37,8 +36,7 @@ if [ "$HOOK_RETRIES" = 0 ]; then
 	exit 1
 fi
 # Run the SQL script
-if mysql -h$MYSQL_SERVICE_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD -P3306
-	$MYSQL_DATABASE < /tmp/users.sql
+if mysql -h$MYSQL_SERVICE_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD -P3306 $MYSQL_DATABASE < /tmp/users.sql
 then
 	echo 'Database initialized successfully'
 else
