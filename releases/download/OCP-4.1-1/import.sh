@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# get timer and retries from env 
+if [ "SHOOK RETRIES" = "" ]; 
+  then HOOK RETRIES=0
+fi 
+if [ "SHOOK SLEEP" = "" ]; 
+  then HOOK SLEEP=2 
+fi 
+
+cd /tmp 
+
+
 echo 'Downloading SQL script that initializes the database...'
 curl -s -O https://raw.githubusercontent.com/fortbumbaca/DO288-apps/strategy/releases/download/OCP-4.1-1/users.sql
 
@@ -21,17 +32,16 @@ let HOOK_RETRIES=HOOK_RETRIES-1
 done
 
 
-
 if [ "$HOOK_RETRIES" = 0 ]; then
-echo 'Too many tries, giving up'
-exit 1
+	echo 'Too many tries, giving up'
+	exit 1
 fi
 # Run the SQL script
 if mysql -h$MYSQL_SERVICE_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD -P3306
-$MYSQL_DATABASE < /tmp/users.sql
+	$MYSQL_DATABASE < /tmp/users.sql
 then
-echo 'Database initialized successfully'
+	echo 'Database initialized successfully'
 else
-echo 'Failed to initialize database'
+	echo 'Failed to initialize database'
 exit 2
 fi
