@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # get timer and retries from env 
-if [ "SHOOK RETRIES" = "" ]; 
+if [ "$HOOK RETRIES" = "" ]; 
   then HOOK RETRIES=0
 fi 
-if [ "SHOOK SLEEP" = "" ]; 
+if [ "$HOOK SLEEP" = "" ]; 
   then HOOK SLEEP=2 
 fi 
 
